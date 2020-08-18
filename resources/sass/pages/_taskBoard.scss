@@ -1,0 +1,21 @@
+.tasksInBoard {
+  display: flex;
+  @include arLang(
+    &,
+    (
+      flex-direction: row-reverse,
+    )
+  ); // for lang
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 1rem;
+  @extend %scroll;
+  &::-webkit-scrollbar {
+    height: 0.7rem;
+  }
+  .afterLastTask {
+    padding: 0 1.5rem;
+  } // afterLastTask
+} // tasksInBoard

@@ -1,0 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
+.sideBar {
+  background-color: $bg-main-color;
+  min-height: 100vh;
+  height: 100vh;
+  width: 50vw;
+  color: $font-main-color;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: -100%;
+  @include arLang(
+    &,
+    (
+      left: auto,
+      right: -100%,
+      text-align: right,
+    )
+  ); // for lang
+  transition: all 0.8s linear;
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    width: 25vw;
+  } //media aria : media screen
+  @media (min-width: 992px) {
+    width: 6vw;
+    left: 0;
+    @include arLangMedia(
+      &,
+      (
+        right: 0,
+        left: auto,
+      ),
+      "min-width: 992px"
+    );
+  } //media aria : large screen
+  &.openSideBar {
+    left: 0;
+    @include arLang(
+      &,
+      (
+        right: 0,
+        left: auto,
+      )
+    ); // for lang
+  }
+  .logo {
+    height: 10vh;
+    max-width: 100%;
+    padding: 1.8rem 0;
+    transition: all 0.5s linear;
+    margin-bottom: 1rem;
+    &:hover {
+      @extend %i-hover;
+    }
+    p {
+      width: 100%;
+      font-size: 1.8rem;
+      font-family: "Kaushan Script", cursive;
+      text-shadow: 1px 1px 1px $font-main-color;
+      @media (min-width: 768px) and (max-width: 991.98px) {
+        font-size: 2.1rem;
+      } //media aria : media screen
+    } // if logo is text
+    img {
+      max-width: 100%;
+    } // if logo is image
+  } // logo style
+  .links {
+    display: flex;
+    height: 80vh;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 3rem;
+    @media (min-width: 992px) {
+      height: 85vh;
+    } //media aria : large screen
+    .mainLinks {
+      .action {
+        @extend %action-class;
+      } // class action : have icon font and span
+    } // mainLinks class
+
+    .footerLinks {
+      position: relative;
+      bottom: 1.5rem;
+      .action {
+        @extend %action-class;
+      }
+    } // footerLinks
+  } //links class
+}
+
+.closeSideBar {
+  position: relative;
+  left: 30%;
+  top: 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 1000;
+  @include arLang(
+    &,
+    (
+      right: 30%,
+      left: auto,
+      text-align: right,
+    )
+  ); // for lang
+  &:hover {
+    @extend %i-hover;
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    font-size: 1.5rem;
+  } //media aria : media screen
+
+  @media (min-width: 992px) {
+    display: none;
+  } //media aria : large screen
+}
+
+%i-hover {
+  cursor: pointer;
+  color: $font-hover-color;
+}
+
+%action-class {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.5s linear;
+  i {
+    font-size: 2rem;
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      font-size: 2.5rem;
+    } //media aria : media screen
+
+    @media (min-width: 992px) {
+      font-size: 2rem;
+    } //media aria : large screen
+  } // i : icon font
+  span {
+    display: block;
+    font-size: 1.2rem;
+    margin-top: 0.3rem;
+    color: rgba($font-main-color, $alpha: 0.5);
+    transition: all 0.5s linear;
+    &:hover {
+      color: rgba($font-main-color, $alpha: 0.8);
+    }
+    @media (min-width: 768px) {
+      font-size: 1.2rem;
+    } //media aria : media screen
+  }
+  &:hover {
+    @extend %i-hover;
+  }
+}

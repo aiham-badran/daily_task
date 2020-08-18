@@ -1,0 +1,13 @@
+{
+  "en": {
+    "global": {
+      "calendar": "Calendar",
+      "logout": "Logout",
+      "trash": "Trash Bin",
+      "categories": "Categories",
+      "setting": "Settings",
+      "profile": "Profile"
+    },
+    "breadcrumb": {}
+  }
+}

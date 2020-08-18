@@ -1,0 +1,179 @@
+nav.topMenu {
+  background-color: $bg-main-color;
+  width: 100%;
+  max-height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  @media (min-width: 992px) {
+    width: 94vw;
+    left: 6vw;
+    @include arLang(
+      &,
+      (
+        flex-direction: row !important,
+      )
+    ); //for lang
+    @include arLangMedia(
+      &,
+      (
+        left: auto,
+        right: 6vw,
+      ),
+      "min-width: 992px"
+    ); // for lang
+  }
+  .btn-group {
+    // order: 1;
+    margin: 0 3.5vw;
+    button {
+      &:focus {
+        box-shadow: none;
+      }
+      .userAvatarImage {
+        width: 52px;
+        img {
+          border: none;
+          background-color: $font-hover-color;
+        } // img : avatar for user
+      } // container for avatar
+    } // button has img
+    .dropdown-menu {
+      left: auto;
+      right: 0;
+      background-color: $bg-main-color;
+      font-size: 1.4rem;
+      color: $font-main-color;
+      min-width: 20rem;
+      @include arLang(
+        &,
+        (
+          right: auto,
+          left: 0,
+          text-align: right,
+        )
+      ); // for lang
+      .userName {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: $font-main-color;
+        display: block;
+        width: 100%;
+        padding: 0.25rem 1.5rem;
+        clear: both;
+        font-weight: 400;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 0;
+        text-transform: capitalize;
+      }
+      .dropdown-item {
+        color: $font-main-color;
+        transition: all 0.5s linear;
+        padding: 1rem;
+        i {
+          padding: 0 0.5rem;
+          @include arLang(
+            &,
+            (
+              float: right,
+            )
+          ); // for lang
+        }
+        &:hover {
+          background-color: transparent;
+          color: $font-hover-color !important;
+        }
+      }
+    } // menu for user
+  } // group has img and menu user
+  .navbar-nav {
+    flex-direction: row;
+    @include arLang(
+      &,
+      (
+        flex-direction: row-reverse !important,
+      )
+    ); // for lang
+    li {
+      padding: 5px 15px;
+      margin-top: 5px;
+      color: $font-main-color !important;
+      cursor: pointer;
+      transition: all 0.5s linear;
+      &:hover {
+        color: $font-hover-color !important;
+      }
+      i {
+        font-size: 2rem;
+      } // font icon
+      &.SideBar {
+        @media (min-width: 992px) {
+          display: none;
+        }
+      } // li has class sideBar: this icon for open and close side bar in media and small screen
+      &.disabled {
+        color: rgba($font-main-color, 0.7) !important;
+        cursor: default;
+        &:hover {
+          color: rgba($font-main-color, 0.7) !important;
+        }
+      } // li disabled
+    } // li item
+  } // navbar-nva :bootstrap class
+
+  .listToolIcon {
+    color: $font-main-color;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      order: 2;
+      @include arLang(
+        &,
+        (
+          order: 1,
+        )
+      ); // for lang
+    }
+    span {
+      order: 1;
+      font-size: 1.5rem;
+      margin: 0 5px;
+      @include arLang(
+        &,
+        (
+          order: 2,
+        )
+      ); // for lang
+    }
+  } // listToolIcon : icon show in small screen
+
+  .listToolIconMenu {
+    li {
+      padding: 15px 20px;
+      a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        @include arLang(
+          &,
+          (
+            flex-direction: row-reverse,
+          )
+        );
+        color: $font-main-color;
+        i {
+          padding: 0 20px;
+          font-size: 1.7rem;
+        }
+      }
+    }
+  } // listToolIconMenu : menu have icons in small screen
+} // nav by class topMenu

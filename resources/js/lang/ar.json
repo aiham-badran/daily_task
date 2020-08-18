@@ -1,0 +1,11 @@
+{
+  "global": {
+    "calendar": "التقويم",
+    "logout": "الخروج",
+    "trash": "المهملات",
+    "categories": "الأقسام",
+    "setting": "الإعدادات",
+    "profile": "الملف الشخصي"
+  },
+  "breadcrumb": {}
+}

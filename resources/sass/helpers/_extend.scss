@@ -1,0 +1,117 @@
+%scroll {
+  scrollbar-color: rgba($bg-reverse-color, 0.8) rgba($bg-main-color, 0.2);
+  scrollbar-width: thin;
+  &::-webkit-scrollbar-track {
+    background-color: rgba($bg-main-color, 0.2);
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar {
+    background-color: rgba($bg-main-color, 0);
+    width: 0.5rem;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($bg-reverse-color, 0.8);
+    border-radius: 0.5rem;
+    transition: $transition;
+    cursor: pointer;
+  }
+}
+%scrollWithHover {
+  @extend %scroll;
+  scrollbar-color: rgba($bg-reverse-color, 0) rgba($bg-main-color, 0);
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($bg-reverse-color, 0);
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba($bg-main-color, 0);
+  }
+  &:hover {
+    scrollbar-color: rgba($bg-reverse-color, 0.8) rgba($bg-main-color, 0.2);
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($bg-reverse-color, 0.8);
+      border-radius: 0.5rem;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: rgba($bg-main-color, 0.2);
+    }
+  }
+}
+
+// table style
+
+%baseTable {
+  background-color: rgba($bg-reverse-color, 0.3);
+  color: $font-main-color;
+  height: auto;
+  font-size: 1.6rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 0.3rem 0 $bg-reverse-color;
+  position: relative;
+  margin: 0 0.8rem;
+  @include arLang(
+    &,
+    (
+      text-align: right,
+    )
+  ); // for lang
+}
+
+%headerTable {
+  background-color: rgba($bg-main-color, 0.3);
+  border-radius: 0.2rem;
+  padding: 1rem 0;
+  font-weight: 600;
+  margin: 0;
+  width: 100%;
+  @include arLang(
+    &,
+    (
+      flex-direction: row-reverse,
+    )
+  ); // for lang
+}
+
+%bodyTable {
+  overflow: hidden;
+  height: auto;
+  min-height: 70vh;
+  padding: 0 1.3rem;
+  .bodyRow {
+    padding: 1.8rem 0;
+    box-shadow: 0 0.1rem 0.7rem -0.3rem $shadow-color;
+    @include arLang(
+      &,
+      (
+        flex-direction: row-reverse,
+      )
+    ); // for lang
+    .bodyDesc {
+      @extend %mobileDescStyle;
+    }
+    cursor: pointer;
+    i {
+      font-size: 2.2rem;
+      color: var(--icon-color, $font-main-color);
+      padding: 0 0.5rem;
+      @include arLang(
+        &,
+        (
+          float: right,
+        )
+      ); // for lang
+    }
+    &.active,
+    &:hover {
+      background-color: rgba($bg-main-color, 0.3);
+    }
+  } //cateRow
+}
+
+%mobileDescStyle {
+  @media (max-width: 576px) {
+    order: 1;
+    padding-top: 3rem;
+    padding-bottom: 0.5rem;
+  }
+}

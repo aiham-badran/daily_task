@@ -1,0 +1,12 @@
+.trashBin {
+  @extend %baseTable;
+  header {
+    @extend %headerTable;
+    .headerDesc {
+      @extend %mobileDescStyle;
+    }
+  } // header
+  .trashData {
+    @extend %bodyTable;
+  } //trashData
+} //trashBin

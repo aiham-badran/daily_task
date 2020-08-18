@@ -1,0 +1,182 @@
+$topAndButton: 4rem;
+$taskHight: 75vh;
+$taskWidth: 94%;
+
+.taskContainer {
+  position: relative;
+  width: $taskWidth;
+  flex-basis: $taskWidth;
+  @media (min-width: 768px) {
+    width: $taskWidth / 2;
+    flex-basis: $taskWidth / 2;
+  }
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    width: $taskWidth / 3;
+    flex-basis: $taskWidth / 3;
+  }
+  @media (min-width: 1200px) {
+    width: $taskWidth / 4;
+    flex-basis: $taskWidth / 4;
+  }
+
+  font-size: 1.6rem;
+  color: $font-main-color;
+  text-transform: capitalize;
+  margin: 1rem 0.8rem 4rem;
+  .time {
+    position: absolute;
+    top: -1rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.3rem;
+    color: rgba($font-main-color, 0.7);
+    &.active {
+      color: var(--color-cat);
+    }
+  } // time
+  i {
+    font-size: 1.5rem;
+    padding: 0 0.35rem;
+  }
+  .task {
+    position: relative;
+    top: 1rem;
+    min-height: $taskHight;
+    max-height: $taskHight;
+    overflow: hidden;
+    background-color: rgba($bg-main-color, 0.5);
+    border-radius: 5px;
+    &.active {
+      box-shadow: 12px 0 13px -12px var(--color-cat, $bg-main-color),
+        -17px 0 13px -20px var(--color-cat, $bg-main-color);
+    }
+    header {
+      @extend %headerAndFooter;
+      top: 0;
+      .state {
+        font-weight: bold;
+        padding: 0.5rem 1.5rem;
+        border-radius: 1.5rem;
+        cursor: pointer;
+        &.active {
+          background-color: rgba($bg-main-color, 0.6);
+        }
+      }
+    }
+    .taskBody {
+      position: absolute;
+      max-height: $taskHight;
+      overflow-x: hidden;
+      overflow-y: auto;
+      top: $topAndButton;
+      bottom: $topAndButton;
+      padding: 1.5rem;
+      left: 0;
+      right: 0;
+      transition: $transition;
+      border: 0.15rem solid var(--color-cat, $bg-main-color);
+      @extend %scrollWithHover;
+      .title {
+        padding: 0.5rem 0;
+        font-weight: 400;
+        line-height: 3rem;
+        text-transform: none;
+      }
+    }
+    footer {
+      @extend %headerAndFooter;
+      bottom: 0;
+      .tools {
+        i {
+          cursor: pointer;
+          padding: 0 2rem;
+          font-size: 2.1rem;
+          &:hover {
+            color: $font-hover-color;
+          }
+          &.displayed {
+            cursor: not-allowed;
+            &:hover {
+              color: $font-main-color;
+            }
+          }
+          @media (min-width: 768px) {
+            padding: 0 1rem;
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+  } // task
+} //taskContainer
+
+.step {
+  display: flex;
+  justify-content: start;
+  cursor: pointer;
+  box-shadow: 0px 6px 4px -6px rgba($shadow-color, 0.7);
+  margin-bottom: 0.7rem;
+  margin-top: 0.7rem;
+  text-transform: none;
+  i {
+    padding: 0.3rem 0;
+    padding-right: 1.5rem;
+    &.active {
+      color: var(--color-cat);
+    }
+  }
+  .showText {
+    width: 90%;
+  }
+  .addStep {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include arLang(
+      &,
+      (
+        flex-direction: row-reverse,
+      )
+    ); // for lang
+    .writeStep {
+      resize: none;
+      overflow: hidden;
+      background-color: transparent; //rgba($bg-main-color, $alpha: 0.3);
+      border: none;
+      // box-shadow: 0 0 3px 0 $shadow-color;
+      color: $font-main-color;
+      font-size: 1.6rem;
+      padding: 0;
+      @include arLang(
+        &,
+        (
+          text-align: right,
+        )
+      ); // for lang
+      // line-height: 2.95rem;
+      &:active,
+      &:focus {
+        box-shadow: none;
+        border: none;
+      }
+    }
+    i {
+      font-size: 1.6rem;
+      padding: 0.3rem 1rem;
+    }
+  } // addStep
+} // step
+
+%headerAndFooter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: $topAndButton;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-cat, $bg-main-color);
+  font-size: 1.3rem;
+} // headerAndFooter

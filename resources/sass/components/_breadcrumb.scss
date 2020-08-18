@@ -1,0 +1,52 @@
+.breadcrumb {
+  background-color: transparent;
+  font-size: 1.8em;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: $font-main-color;
+  padding-top: 1.5rem;
+  @include arLang(
+    &,
+    (
+      text-align: right,
+      flex-direction: row-reverse,
+    )
+  ); // for lang
+  .breadcrumb-item {
+    &.active {
+      color: rgba($font-main-color, 0.7);
+    } // active item
+
+    &:not(.active):hover {
+      color: $font-hover-color;
+    } // hover
+
+    @include arLang(
+      &,
+      (
+        text-align: right,
+        flex-direction: row-reverse,
+      )
+    ); // for lang
+    & + .breadcrumb-item {
+      @include arLang(
+        &,
+        (
+          padding-right: 0.5rem,
+        )
+      ); // for lang
+      &::before {
+        @include arLang(
+          &,
+          (
+            padding-left: 0.5rem,
+          )
+        ); // for lang
+      } // before for next item
+    } // next item
+  } // .breadcrumb-item in bootstrap
+
+  i {
+    padding: 3px 5px 0;
+  } // font icon
+}

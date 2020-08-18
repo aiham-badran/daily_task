@@ -1,0 +1,155 @@
+.categoriesPage {
+  @extend %baseTable;
+  header {
+    @extend %headerTable;
+    .headerDesc {
+      @extend %mobileDescStyle;
+    }
+  } // header
+  .cateData {
+    @extend %bodyTable;
+  } //cateData
+} //categoriesPage
+
+.cateModal {
+  .cateColorIcon {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    @include arLang(
+      &,
+      (
+        flex-direction: row-reverse,
+      )
+    ); // for lang
+    @media (max-width: 768px) {
+      flex-direction: column !important;
+    }
+    .cateColors {
+      width: 50%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      @include arLang(
+        &,
+        (
+          flex-direction: row-reverse,
+        )
+      ); // for lang
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+      .vue-swatches__container {
+        background-color: rgba($bg-reverse-color, 0.9) !important;
+        border: 1px solid $border-color !important;
+      }
+    }
+    .cateIcons {
+      width: 50%;
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.5rem;
+      @include arLang(
+        &,
+        (
+          flex-direction: row-reverse,
+        )
+      ); // for lang
+      .dropdownBtn {
+        background-color: transparent;
+        border: none;
+        font-size: 2.8rem;
+        color: $font-main-color;
+        &:active,
+        &:focus {
+          outline: none;
+          border: none;
+          box-shadow: none;
+        }
+      } //dropdownBtn
+      .boxIcon {
+        width: 30rem;
+        transform: translate3d(-175px, 38px, 0) !important;
+        @include arLang(
+          &,
+          (
+            transform: translate3d(-34px, 38px, 0) !important,
+          )
+        ); // for lang
+        @media (max-width: 768px) {
+          transform: translate3d(-234px, -191px, 0) !important;
+        }
+        border: 1px solid $border-color;
+        background-color: rgba($bg-reverse-color, 0.9);
+        color: $font-main-color;
+        .iconRow {
+          display: flex;
+          flex-wrap: wrap;
+          margin-right: -15px;
+          @include arLang(
+            &,
+            (
+              flex-direction: row-reverse,
+              margin-left: -15px,
+              margin-right: -5px,
+            )
+          ); // for lang
+          .iconEl {
+            flex-basis: 15%;
+            padding: 0.5rem 0.5rem;
+            cursor: pointer;
+            i {
+              font-size: 3rem;
+              padding: 1rem;
+              color: rgba($font-reverse-color, 0.5);
+              transition: $transition;
+            } // i icon font
+          } // iconEl
+          .dropdown-item:hover,
+          .dropdown-item:focus {
+            background-color: transparent;
+            i {
+              color: rgba($font-reverse-color, 1);
+            }
+          }
+        } //iconRow
+      } //boxIcon
+    } //cateIcons
+  } //cateColorIcon
+} // cateCreate
+
+// choose category
+
+.chooseCategoryModal {
+  .categories {
+    @extend %scrollWithHover;
+    max-height: 50vh;
+    padding: 0.2rem 0 5rem;
+    font-size: 1.9rem;
+    overflow: hidden;
+    overflow-y: auto;
+    background: $bg-main-color;
+    color: $font-main-color;
+    border-radius: 0.2rem;
+    box-shadow: 0px 0px 1px 0px;
+    .theCate {
+      padding: 1.2rem 2.5rem;
+      border-bottom: 0.1rem solid;
+      cursor: pointer;
+      &:hover,
+      &.active {
+        border-color: $border-color;
+        padding: 1.2rem 2.8rem;
+      }
+      span {
+        padding: 0 3rem;
+      } //
+    } //theCate
+  } //categories
+} //chooseCategoryModal

@@ -1,0 +1,56 @@
+:root {
+  font-size: 10px;
+}
+body {
+  background-color: #fff;
+}
+a,
+a:hover,
+a:active,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+// for all show aria
+.viewAria {
+  width: 100%;
+  margin-top: 7rem;
+
+  @include arLang(
+    &,
+    (
+      margin-left: auto,
+      margin-right: 7vw,
+      text-align: right,
+    )
+  ); // for lang
+  @media (min-width: 992px) {
+    width: calc(100% - 7vw);
+    margin-left: 7vw;
+    padding-right: 15px;
+    margin-right: auto;
+  }
+}
+
+main {
+  min-height: 100vh;
+  max-width: 100vw !important;
+  overflow: hidden;
+  background-image: linear-gradient(
+      to left,
+      rgba($bg-reverse-color, 0.3),
+      rgba($bg-main-color, 0.8)
+    ),
+    url("../img/bg-main.jpg");
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 2px;
+}
+
+.mainBox {
+  position: relative;
+  overflow: hidden;
+}

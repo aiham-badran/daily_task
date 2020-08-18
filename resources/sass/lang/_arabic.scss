@@ -1,0 +1,19 @@
+@use 'sass:map';
+
+@each $parent, $content in $arLang {
+  .ar-lang #{$parent} {
+    @each $property, $value in $content {
+      #{$property}: $value;
+    }
+  }
+}
+
+@each $parent, $content in $arLangMedia {
+  .ar-lang #{$parent} {
+    @media (#{map.get($content,"media")}) {
+      @each $property, $value in map.get($content, "content") {
+        #{$property}: $value;
+      }
+    }
+  }
+}

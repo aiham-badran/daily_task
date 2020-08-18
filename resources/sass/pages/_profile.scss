@@ -1,0 +1,143 @@
+.profile {
+  @extend %baseTable;
+  margin-top: 10rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+  .profileHeader {
+    width: 100%;
+    position: relative;
+    top: -55px;
+    .profileImg {
+      width: 12.5rem;
+      height: 12.5rem;
+      cursor: pointer;
+    } //profileImg
+    .profileName {
+      font-size: 2.8rem;
+      padding: 1rem 1rem 0 1rem;
+      text-transform: capitalize;
+      color: $font-reverse-color;
+    } //profileName
+  } // profileHeader
+  .profileData {
+    margin-top: -4rem;
+    padding: 0 3rem;
+    font-size: 1.8rem;
+    .profileDataField {
+      padding: 1rem 0.5rem;
+      @include arLangMedia(
+        &,
+        (
+          flex-direction: row-reverse!important,
+        ),
+        "min-width: 768px"
+      ); // for lang
+      label {
+        padding: 0.5rem;
+        text-transform: capitalize;
+      }
+      input {
+        display: block;
+        width: 75%;
+        background: transparent;
+        border: none;
+        padding: 0.5rem;
+        color: #fff;
+        font-size: 1.8rem;
+        box-shadow: none;
+        outline: none;
+        transition: $transition;
+        border-bottom: 0.1rem solid transparent;
+        @include arLangMedia(
+          &,
+          (
+            text-align: right,
+          ),
+          "min-width: 768px"
+        ); // for lang
+        @media (max-width: 767px) {
+          width: 100%;
+          border-bottom-color: $border-color;
+        }
+        &::placeholder {
+          color: rgba($font-main-color, 0.7);
+        }
+        &:focus {
+          border-bottom-color: $border-color;
+        }
+      } // input
+      .btnPassword {
+        width: 75%;
+        .btn {
+          font-size: 1.6rem;
+          &:focus {
+            box-shadow: none;
+          }
+        } //btn
+      } //btnPassword
+    } //profileDataField
+  } //profileData
+  .profileSaveData {
+    @include arLang(
+      &,
+      (
+        justify-content: flex-start !important,
+      )
+    ); // for lang
+    .btn {
+      font-size: 1.6rem;
+      background: $bg-main-color;
+      color: $font-main-color;
+      border: $bg-main-color;
+      &:hover {
+        background-color: $bg-hover-color;
+      }
+    }
+  } //profileSaveData
+} // profile
+
+.profileImg {
+  .modal-body {
+    .row {
+      @media (max-width: 767px) {
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  .btnUpldeIamge {
+    font-size: 1.6rem;
+  }
+  .imageView {
+    margin-top: 2rem;
+    @media (max-width: 767px) {
+      margin-top: 3.5rem;
+    }
+  } //imageView
+  .imageFile {
+    @include arLang(
+      &,
+      (
+        align-self: flex-end,
+      )
+    ); // for lang
+    .newImage {
+      display: inline-block;
+      margin: 0 2.4rem;
+      @include arLang(
+        &,
+        (
+          float: right,
+        )
+      ); // for lang
+    } //newImage
+  }
+  // .modal-footer {
+  //   @include arLang(
+  //     &,
+  //     (
+  //       justify-content: end,
+  //     )
+  //   ); // for lang
+  // } //modal-footer
+} // profileImg : modal for change image
