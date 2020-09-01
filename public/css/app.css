@@ -20567,8 +20567,6 @@ nav.topMenu .listToolIconMenu li a i {
 
 .calenderTable .calenderBody .dayCell .dayInfo {
   position: absolute;
-  display: none;
-  font-size: 1.3rem;
   padding: 5px 15px;
   margin-top: 3px;
   width: auto;
@@ -20577,31 +20575,7 @@ nav.topMenu .listToolIconMenu li a i {
 
 @media (min-width: 768px) and (max-width: 991px) {
   .calenderTable .calenderBody .dayCell .dayInfo {
-    top: 85px !important;
-  }
-}
-
-@media (max-width: 992px) {
-  .calenderTable .calenderBody .dayCell .dayInfo.active {
-    display: block;
-    padding: 15px 15px;
-    top: 36px;
-    left: -11px;
-    z-index: 999;
-    background-color: #142850;
-    border-radius: 5px;
-    width: 150px;
-  }
-
-  .calenderTable .calenderBody .dayCell .dayInfo.active::before {
-    content: "";
-    position: absolute;
-    top: -15px;
-    left: 14px;
-    border: 7px solid;
-    width: 15px;
-    height: 15px;
-    border-color: transparent transparent #142850 transparent;
+    top: 38px !important;
   }
 }
 
@@ -20619,7 +20593,19 @@ nav.topMenu .listToolIconMenu li a i {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 6rem;
+  color: rgba(20, 40, 80, 0.8);
+}
+
+.calenderTable .calenderBody .dayCell .dayInfo > div .fa-clipboard {
+  position: relative;
+}
+
+.calenderTable .calenderBody .dayCell .dayInfo > div .fa-clipboard span {
+  position: absolute;
+  left: 13px;
+  font-size: 4rem;
+  top: 14px;
 }
 
 .breadcrumb {
@@ -21672,19 +21658,6 @@ nav.topMenu .listToolIconMenu li a i {
 @media (min-width: 768px) {
   .ar-lang .calenderTable .calenderBody .dayCell {
     align-items: flex-end;
-  }
-}
-
-@media (max-width: 992px) {
-  .ar-lang .calenderTable .calenderBody .dayCell .dayInfo.active {
-    left: -44px;
-  }
-}
-
-@media (max-width: 992px) {
-  .ar-lang .calenderTable .calenderBody .dayCell .dayInfo.active::before {
-    right: 14px;
-    left: auto;
   }
 }
 

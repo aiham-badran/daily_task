@@ -2555,38 +2555,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "calender-table",
@@ -2603,34 +2571,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.month = currentDate.getMonth() + 1;
     this.yaer = currentDate.getFullYear();
     var goDate = this.month + "-" + currentDate.getDate() + "-" + this.yaer;
+    this.currentDate = goDate;
     this.setDateForBoard(goDate);
+    this.TaskCountInMonth();
   },
   data: function data() {
     return {
       yaer: null,
       month: null,
+      currentDate: null,
       stateOfMonthList: false,
       tasksAnalysisDay: undefined,
-      tasksAnalysis: {
-        2020: {
-          6: {
-            1: {
-              tasks: 12,
-              complete: 10,
-              uncomplete: 2
-            },
-            2: {
-              tasks: 3,
-              complete: 0,
-              uncomplete: 3
-            },
-            20: {
-              tasks: 1,
-              complete: 1
-            }
-          }
-        }
-      }
+      tasksAnalysis: 0
     };
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(["setDateForBoard"])), {}, {
@@ -2694,9 +2646,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         targets.classList.add("dayCellActive");
       }
 
-      this.checkInfoData;
       var goDate = this.month + "-" + day + "-" + this.yaer;
-      this.setDateForBoard(goDate);
+      if (this.checkDayNotOld(goDate)) this.setDateForBoard(goDate);else this.setDateForBoard(undefined);
     },
     chooseMonth: function chooseMonth(index) {
       this.removeAcitve(".dayCell", "dayCellActive");
@@ -2712,6 +2663,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.yaer += 1;
       }
       this.setDateForBoard(undefined);
+      this.TaskCountInMonth();
     },
     previousMonth: function previousMonth() {
       this.removeAcitve(".dayCell", "dayCellActive");
@@ -2720,10 +2672,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.yaer -= 1;
       }
       this.setDateForBoard(undefined);
+      this.TaskCountInMonth();
     },
     poneTaskBoard: function poneTaskBoard(day) {
       var date = this.month + "-" + day + "-" + this.yaer;
-      this.$router.push({
+      if (checkDayNotOld(date)) this.$router.push({
         name: "taskBoard",
         params: {
           taskBoard: date
@@ -2731,6 +2684,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     TaskCountInMonth: function TaskCountInMonth() {
+      var _this = this;
+
       var countDay = new Date(this.yaer, this.month, 0).getDate(),
           data = {
         startDate: "".concat(this.yaer, "-").concat(this.month, "-1"),
@@ -2739,12 +2694,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.get("task/Tasks-count", {
         params: data
       }).then(function (response) {
-        return console.log(response);
+        return response.data;
+      }).then(function (data) {
+        return _this.tasksAnalysis = data;
       })["catch"](function (error) {
         return console.log(error.response);
       });
-    } // dateForamt()
+    },
+    checkDayNotOld: function checkDayNotOld(date) {
+      var oldTasks = false;
+      var theDate = new Date(date);
 
+      if (this.tasksAnalysis) {
+        if (this.tasksAnalysis[theDate.getDate()]) oldTasks = true;
+      }
+
+      if (theDate.getTime() >= new Date(this.currentDate).getTime() || oldTasks) {
+        console.log(true);
+        return true;
+      } else return false;
+    }
   }),
   computed: {
     /**
@@ -2766,22 +2735,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     numberOfCellInLast: function numberOfCellInLast() {
       var last = 35 - this.firstDayInMonth - this.dayInMonth;
       if (last > 0) return last;else return 7 - Math.abs(last);
-    },
-    checkInfoData: function checkInfoData() {
-      var years = Object.getOwnPropertyDescriptor(this.tasksAnalysis, this.yaer);
-
-      if (years != undefined) {
-        this.tasksAnalysisDay = "year";
-        var months = Object.getOwnPropertyDescriptor(years.get.call(), this.month);
-
-        if (months != undefined) {
-          this.tasksAnalysisDay = months.get.call();
-        } else {
-          this.tasksAnalysisDay = undefined;
-        }
-      } else {
-        this.tasksAnalysisDay = undefined;
-      }
     }
   }
 });
@@ -45639,7 +45592,6 @@ var render = function() {
                 key: index,
                 staticClass: "col-2 dayCell",
                 class: { dayCellActive: _vm.checkToday(day) },
-                attrs: { tasksAnalysisDay: _vm.checkInfoData },
                 on: {
                   click: function($event) {
                     _vm.chooseDay($event, day), _vm.popover($event)
@@ -45652,96 +45604,22 @@ var render = function() {
               [
                 _c("div", { staticClass: "date" }, [_vm._v(_vm._s(day))]),
                 _vm._v(" "),
-                _vm.tasksAnalysisDay != undefined
-                  ? _c(
-                      "div",
-                      { staticClass: "dayInfo" },
-                      [
-                        _vm.tasksAnalysisDay[day] != undefined
-                          ? [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "tasks text-info",
-                                  attrs: { title: "tasks" }
-                                },
-                                [
-                                  _c("i", { staticClass: "far fa-clipboard" }),
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _vm._v(
-                                      "\n                    " +
-                                        _vm._s(_vm.$t("Analysis.tasks")) +
-                                        " :" +
-                                        _vm._s(
-                                          _vm.tasksAnalysisDay[day].tasks
-                                        ) +
-                                        "\n                "
-                                    )
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _vm.tasksAnalysisDay[day].complete
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass: "taskCopmleted text-success",
-                                      attrs: { title: "completed" }
-                                    },
-                                    [
-                                      _c("i", { staticClass: "fas fa-check" }),
-                                      _vm._v(" "),
-                                      _c("span", [
-                                        _vm._v(
-                                          "\n                    " +
-                                            _vm._s(
-                                              _vm.$t("Analysis.completed")
-                                            ) +
-                                            " :" +
-                                            _vm._s(
-                                              _vm.tasksAnalysisDay[day].complete
-                                            ) +
-                                            "\n                "
-                                        )
-                                      ])
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.tasksAnalysisDay[day].uncomplete
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "taskUncompleted text-danger",
-                                      attrs: { title: "uncompleted" }
-                                    },
-                                    [
-                                      _c("i", { staticClass: "fas fa-times" }),
-                                      _vm._v(" "),
-                                      _c("span", [
-                                        _vm._v(
-                                          "\n                    " +
-                                            _vm._s(
-                                              _vm.$t("Analysis.uncomplete")
-                                            ) +
-                                            " :\n                  " +
-                                            _vm._s(
-                                              _vm.tasksAnalysisDay[day]
-                                                .uncomplete
-                                            ) +
-                                            "\n                "
-                                        )
-                                      ])
-                                    ]
-                                  )
-                                : _vm._e()
-                            ]
-                          : _vm._e()
-                      ],
-                      2
-                    )
+                _vm.tasksAnalysis
+                  ? _c("div", { staticClass: "dayInfo" }, [
+                      _c(
+                        "div",
+                        { staticClass: "tasks", attrs: { title: "tasks" } },
+                        [
+                          _vm.tasksAnalysis[day]
+                            ? _c("i", { staticClass: "far fa-clipboard" }, [
+                                _c("span", [
+                                  _vm._v(_vm._s(_vm.tasksAnalysis[day]))
+                                ])
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ])
                   : _vm._e()
               ]
             )

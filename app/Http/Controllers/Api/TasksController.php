@@ -161,10 +161,37 @@ class TasksController extends Controller
     return response()->json(['message' => "The status was not changed "], 422);
   }
 
+  /**
+   *
+   */
   public function taskInDate(Request $request)
   {
-    // return Task::whereBetween("task_at", [$request->startDate, $request->endDate])->get(['task_at', 'id']);
-    $cot =  Task::whereBetween("task_at", ["2020-7-1", "2020-7-30"])->get();
-    echo $cot;
+    $allTasks =  Task::whereBetween("task_at", [$request->startDate, $request->endDate])->get(['task_at']);
+    if (count($allTasks) == 0)
+      return "0";
+    return response()->json($this->countTaskInMonth($allTasks));
+
+
+    $cot =  Task::whereBetween("task_at", ["2020-7-1", "2020-7-30"])->get("task_at");
+  }
+  /**
+   *  It counts the number of tasks by date and creates an array. The key is date and the values represent the number of tasks on that date
+   *
+   * @param tasks : record form database
+   * @return Array
+   */
+  private function countTaskInMonth($tasks)
+  {
+    $countTasks = [];
+    for ($i = 0; $i < count($tasks); $i++) {
+      $date = date("j", strtotime($tasks[$i]->task_at));
+      if (!array_key_exists($date, $countTasks)) {
+        $countTasks[$date] = 1;
+      } else {
+        $countTasks[$date] += 1;
+      }
+    }
+
+    return $countTasks;
   }
 }

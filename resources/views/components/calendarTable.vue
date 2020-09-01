@@ -59,52 +59,20 @@
             v-for="(day, index) in dayInMonth"
             :key="index"
             :class="{ dayCellActive: checkToday(day) }"
-            :tasksAnalysisDay="checkInfoData"
             @click="chooseDay($event, day), popover($event)"
             @dblclick="poneTaskBoard(day)"
           >
             <div class="date">{{ day }}</div>
             <!-- date class  -->
-            <div class="dayInfo" v-if="tasksAnalysisDay != undefined">
-              <template v-if="tasksAnalysisDay[day] != undefined">
-                <div class="tasks text-info" title="tasks">
-                  <i class="far fa-clipboard"></i>
-                  <span>
-                    &nbsp; {{ $t("Analysis.tasks") }} :{{
-                    tasksAnalysisDay[day].tasks
-                    }}
-                  </span>
-                </div>
-                <!-- tasks class -->
-                <!-- -- -->
-                <div
-                  class="taskCopmleted text-success"
-                  title="completed"
-                  v-if="tasksAnalysisDay[day].complete"
-                >
-                  <i class="fas fa-check"></i>
-                  <span>
-                    &nbsp; {{ $t("Analysis.completed") }} :{{
-                    tasksAnalysisDay[day].complete
-                    }}
-                  </span>
-                </div>
-                <!-- completed class -->
-                <!-- -- -->
-                <div
-                  class="taskUncompleted text-danger"
-                  title="uncompleted"
-                  v-if="tasksAnalysisDay[day].uncomplete"
-                >
-                  <i class="fas fa-times"></i>
-                  <span>
-                    &nbsp; {{ $t("Analysis.uncomplete") }} :
-                    {{ tasksAnalysisDay[day].uncomplete }}
-                  </span>
-                </div>
-                <!-- uncompleted calss -->
-                <!-- -- -->
-              </template>
+
+            <div class="dayInfo" v-if="tasksAnalysis">
+              <div class="tasks" title="tasks">
+                <i class="far fa-clipboard" v-if="tasksAnalysis[day]">
+                  <span>{{tasksAnalysis[day]}}</span>
+                </i>
+              </div>
+              <!-- tasks class -->
+              <!-- -- -->
             </div>
             <!-- day info class -->
             <!-- -- -->
@@ -146,36 +114,21 @@ export default {
     this.month = currentDate.getMonth() + 1;
     this.yaer = currentDate.getFullYear();
     let goDate = this.month + "-" + currentDate.getDate() + "-" + this.yaer;
+    this.currentDate = goDate;
     this.setDateForBoard(goDate);
+    this.TaskCountInMonth();
   },
   data() {
     return {
       yaer: null,
       month: null,
+      currentDate: null,
       stateOfMonthList: false,
       tasksAnalysisDay: undefined,
-      tasksAnalysis: {
-        2020: {
-          6: {
-            1: {
-              tasks: 12,
-              complete: 10,
-              uncomplete: 2,
-            },
-            2: {
-              tasks: 3,
-              complete: 0,
-              uncomplete: 3,
-            },
-            20: {
-              tasks: 1,
-              complete: 1,
-            },
-          },
-        },
-      },
+      tasksAnalysis: 0,
     };
   },
+
   methods: {
     ...mapMutations(["setDateForBoard"]),
     /**
@@ -231,10 +184,11 @@ export default {
         this.removeAcitve(".dayCell", "dayCellActive");
         targets.classList.add("dayCellActive");
       }
-      this.checkInfoData;
 
       let goDate = this.month + "-" + day + "-" + this.yaer;
-      this.setDateForBoard(goDate);
+
+      if (this.checkDayNotOld(goDate)) this.setDateForBoard(goDate);
+      else this.setDateForBoard(undefined);
     },
     chooseMonth: function (index) {
       this.removeAcitve(".dayCell", "dayCellActive");
@@ -251,6 +205,7 @@ export default {
         this.yaer += 1;
       }
       this.setDateForBoard(undefined);
+      this.TaskCountInMonth();
     },
     previousMonth: function () {
       this.removeAcitve(".dayCell", "dayCellActive");
@@ -260,10 +215,12 @@ export default {
         this.yaer -= 1;
       }
       this.setDateForBoard(undefined);
+      this.TaskCountInMonth();
     },
     poneTaskBoard: function (day) {
       let date = this.month + "-" + day + "-" + this.yaer;
-      this.$router.push({ name: "taskBoard", params: { taskBoard: date } });
+      if (checkDayNotOld(date))
+        this.$router.push({ name: "taskBoard", params: { taskBoard: date } });
     },
     TaskCountInMonth() {
       let countDay = new Date(this.yaer, this.month, 0).getDate(),
@@ -273,10 +230,24 @@ export default {
         };
       axios
         .get("task/Tasks-count", { params: data })
-        .then((response) => console.log(response))
+        .then((response) => response.data)
+        .then((data) => (this.tasksAnalysis = data))
         .catch((error) => console.log(error.response));
     },
-    // dateForamt()
+    checkDayNotOld: function (date) {
+      let oldTasks = false;
+      let theDate = new Date(date);
+      if (this.tasksAnalysis) {
+        if (this.tasksAnalysis[theDate.getDate()]) oldTasks = true;
+      }
+      if (
+        theDate.getTime() >= new Date(this.currentDate).getTime() ||
+        oldTasks
+      ) {
+        console.log(true);
+        return true;
+      } else return false;
+    },
   },
   computed: {
     /**
@@ -299,26 +270,6 @@ export default {
       var last = 35 - this.firstDayInMonth - this.dayInMonth;
       if (last > 0) return last;
       else return 7 - Math.abs(last);
-    },
-    checkInfoData: function () {
-      const years = Object.getOwnPropertyDescriptor(
-        this.tasksAnalysis,
-        this.yaer
-      );
-      if (years != undefined) {
-        this.tasksAnalysisDay = "year";
-        let months = Object.getOwnPropertyDescriptor(
-          years.get.call(),
-          this.month
-        );
-        if (months != undefined) {
-          this.tasksAnalysisDay = months.get.call();
-        } else {
-          this.tasksAnalysisDay = undefined;
-        }
-      } else {
-        this.tasksAnalysisDay = undefined;
-      }
     },
   },
 };

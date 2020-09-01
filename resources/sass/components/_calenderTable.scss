@@ -256,52 +256,50 @@ $transition: all 0.5s linear;
       } // hover
       .dayInfo {
         position: absolute;
-        display: none;
-        font-size: 1.3rem;
         padding: 5px 15px;
         margin-top: 3px;
         width: auto;
         align-self: flex-end;
         @media (min-width: 768px) and (max-width: 991px) {
-          top: 85px !important;
+          top: 38px !important;
         }
-        @media (max-width: 992px) {
-          &.active {
-            display: block;
-            padding: 15px 15px;
-            top: 36px;
-            left: -11px;
-            z-index: 999;
-            background-color: $bg-main-color;
-            border-radius: 5px;
-            width: 150px;
-            @include arLangMedia(
-              &,
-              (
-                left: -44px,
-              ),
-              "max-width: 992px"
-            );
-            &::before {
-              content: "";
-              position: absolute;
-              top: -15px;
-              left: 14px;
-              border: 7px solid;
-              width: 15px;
-              height: 15px;
-              border-color: transparent transparent #142850 transparent;
-              @include arLangMedia(
-                &,
-                (
-                  right: 14px,
-                  left: auto,
-                ),
-                "max-width: 992px"
-              );
-            }
-          }
-        }
+        // @media (max-width: 992px) {
+        //   &.active {
+        //     display: block;
+        //     padding: 15px 15px;
+        //     top: 36px;
+        //     left: -11px;
+        //     z-index: 999;
+        //     background-color: $bg-main-color;
+        //     border-radius: 5px;
+        //     width: 150px;
+        //     @include arLangMedia(
+        //       &,
+        //       (
+        //         left: -44px,
+        //       ),
+        //       "max-width: 992px"
+        //     );
+        //     &::before {
+        //       content: "";
+        //       position: absolute;
+        //       top: -15px;
+        //       left: 14px;
+        //       border: 7px solid;
+        //       width: 15px;
+        //       height: 15px;
+        //       border-color: transparent transparent #142850 transparent;
+        //       @include arLangMedia(
+        //         &,
+        //         (
+        //           right: 14px,
+        //           left: auto,
+        //         ),
+        //         "max-width: 992px"
+        //       );
+        //     }
+        //   }
+        // }
 
         @media (min-width: 992px) {
           font-size: 1.5rem;
@@ -314,7 +312,17 @@ $transition: all 0.5s linear;
           display: flex;
           justify-content: space-around;
           align-items: center;
-          font-size: 1.2rem;
+          font-size: 6rem;
+          color: rgba($bg-main-color, 0.8);
+          .fa-clipboard {
+            position: relative;
+            span {
+              position: absolute;
+              left: 13px;
+              font-size: 4rem;
+              top: 14px;
+            }
+          }
         }
       } //dayInfo
     } // dayCell
